@@ -26,6 +26,7 @@ public class Inquiry extends BaseEntity {
     private String content;
     private String type;
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(15) DEFAULT 'WAITING'")
     private InquiryStatus status;
     @OneToMany(mappedBy = "inquiry", cascade = CascadeType.ALL)
     private List<InquiryImage> inquiryImageList = new ArrayList<>();
