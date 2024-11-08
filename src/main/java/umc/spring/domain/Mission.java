@@ -21,10 +21,13 @@ public class Mission extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
-    private int reward;
-    @Column(columnDefinition = "DATETIME(0)")
+    @Column(nullable = false)
+    private Integer price;
+    @Column(nullable = false)
+    private Integer reward;
+    @Column(nullable = false)
     private LocalDate deadline;
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String missionSpec;
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();

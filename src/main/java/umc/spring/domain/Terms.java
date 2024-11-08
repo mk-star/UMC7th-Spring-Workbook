@@ -19,7 +19,7 @@ public class Terms extends BaseEntity {
     private Long id;
     @Column(nullable = false, length = 20)
     private String title;
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
     private Boolean optional;
     @OneToMany(mappedBy = "terms", cascade = CascadeType.ALL)

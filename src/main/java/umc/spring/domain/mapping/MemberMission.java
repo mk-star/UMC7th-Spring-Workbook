@@ -22,7 +22,7 @@ public class MemberMission extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;
-    @Column(columnDefinition = "VARCHAR(15) DEFAULT 'NOT_STARTED'")
+    @Column(nullable = false, columnDefinition = "VARCHAR(15) DEFAULT 'NOT_STARTED'")
     @Enumerated(EnumType.STRING)
     private MissionStatus status;
 }

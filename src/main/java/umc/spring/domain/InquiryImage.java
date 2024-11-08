@@ -16,6 +16,6 @@ public class InquiryImage extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inquiry_id")
     private Inquiry inquiry;
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String filename;
 }

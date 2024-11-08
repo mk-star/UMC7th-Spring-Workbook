@@ -27,8 +27,9 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String name;
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "VARCHAR(10)")
+    @Column(nullable = false, columnDefinition = "VARCHAR(10)")
     private Gender gender;
+    @Column(nullable = false)
     private int age;
     @Column(nullable = false, length = 40)
     private String address;
@@ -44,6 +45,7 @@ public class Member extends BaseEntity {
     private SocialType socialType;
     @Column(nullable = false, length = 50)
     private String email;
+    @Column(nullable = false)
     private Integer point;
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberAgree> memberAgreeList = new ArrayList<>();

@@ -22,11 +22,12 @@ public class Inquiry extends BaseEntity {
     private Member member;
     @Column(nullable = false, length = 20)
     private String title;
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
+    @Column(nullable = false)
     private String type;
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "VARCHAR(15) DEFAULT 'WAITING'")
+    @Column(nullable = false, columnDefinition = "VARCHAR(15) DEFAULT 'WAITING'")
     private InquiryStatus status;
     @OneToMany(mappedBy = "inquiry", cascade = CascadeType.ALL)
     private List<InquiryImage> inquiryImageList = new ArrayList<>();
