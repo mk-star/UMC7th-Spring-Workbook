@@ -7,5 +7,6 @@ import umc.spring.domain.mapping.MemberMission;
 import org.springframework.data.domain.Pageable;
 
 public interface MissionRepositoryCustom {
-    Page<MemberMission> dynamicQueryWithBooleanBuilder(Long memberId, MissionStatus status, Long lastMissionId, Pageable pageable);
+    Page<MemberMission> findMissionsByMemberIdAndStatus(Long memberId, MissionStatus status, Long lastMissionId, Pageable pageable);
+    int findCompletedMissionCountByMemberIdAndStatus(Long memberId, MissionStatus status);
 }
