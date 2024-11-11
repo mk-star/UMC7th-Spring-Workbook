@@ -25,4 +25,16 @@ public class MemberMission extends BaseEntity {
     @Column(nullable = false, columnDefinition = "VARCHAR(15) DEFAULT 'NOT_STARTED'")
     @Enumerated(EnumType.STRING)
     private MissionStatus status;
+
+    @Override
+    public String toString() {
+        return "MemberMission{" +
+                "id=" + id +
+                ", point=" + member.getPoint() +
+                ", name=" + mission.getStore().getName() +
+                ", reward=" + mission.getReward() +
+                ", mission_spec=" + mission.getMissionSpec() +
+                ", status=" + status +
+                '}';
+    }
 }
