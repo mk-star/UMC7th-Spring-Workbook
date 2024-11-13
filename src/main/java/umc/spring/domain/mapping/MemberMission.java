@@ -7,8 +7,6 @@ import umc.spring.domain.Mission;
 import umc.spring.domain.common.BaseEntity;
 import umc.spring.domain.enums.MissionStatus;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 @Entity
 @Getter
@@ -28,16 +26,4 @@ public class MemberMission extends BaseEntity {
     @Column(nullable = false, columnDefinition = "VARCHAR(15) DEFAULT 'NOT_STARTED'")
     @Enumerated(EnumType.STRING)
     private MissionStatus status;
-
-    @Override
-    public String toString() {
-        return "MemberMission{" +
-                "id=" + id +
-                ", name=" + mission.getStore().getName() +
-                ", deadline=" + ChronoUnit.DAYS.between(LocalDate.now(), mission.getDeadline()) +
-                ", price=" + mission.getPrice() +
-                ", reward=" + mission.getReward() +
-                ", status=" + status +
-                '}';
-    }
 }

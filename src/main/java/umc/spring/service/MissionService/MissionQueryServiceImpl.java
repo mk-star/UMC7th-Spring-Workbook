@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import umc.spring.domain.Mission;
 import umc.spring.domain.enums.MissionStatus;
 import umc.spring.domain.mapping.MemberMission;
 import umc.spring.repository.MissionRepository.MissionRepository;
@@ -18,14 +19,9 @@ public class MissionQueryServiceImpl implements MissionQueryService {
     private final MissionRepository missionRepository;
 
     @Override
-    public Optional<MemberMission> findMemberMission(Long id) {
-        return missionRepository.findById(id);
-    }
-
-    @Override
-    public Page<MemberMission> findMissionByMemberIdAndStatus(Long memberId, MissionStatus status, Long lastMissionId, Pageable pageable) {
-        Page<MemberMission> filteredMemberMissions = missionRepository.findMissionsByMemberIdAndStatus(memberId, status, lastMissionId, pageable);
-        filteredMemberMissions.forEach(memberMission -> System.out.println("MemberMission: " + memberMission));
+    public Page<Mission> findMissionByMemberIdAndStatus(Long memberId, MissionStatus status, Long lastMissionId, Pageable pageable) {
+        Page<Mission> filteredMemberMissions = missionRepository.findMissionsByMemberIdAndStatus(memberId, status, lastMissionId, pageable);
+        filteredMemberMissions.forEach(memberMission -> System.out.println("Mission: " + memberMission));
         return filteredMemberMissions;
     }
 
@@ -37,9 +33,9 @@ public class MissionQueryServiceImpl implements MissionQueryService {
     }
 
     @Override
-    public Page<MemberMission> findNotStartedMissionByMemberIdAndStatusAndRegionName(Long memberId, MissionStatus status, String regionName, Long lastMissionId, Pageable pageable) {
-        Page<MemberMission> filteredMemberMissions = missionRepository.findNotStartedMissionByMemberIdAndStatusAndRegionName(memberId, status, regionName, lastMissionId, pageable);
-        filteredMemberMissions.forEach(memberMission -> System.out.println("MemberMission: " + memberMission));
+    public Page<Mission> findNotStartedMissionByMemberIdAndStatusAndRegionName(Long memberId, MissionStatus status, String regionName, Long lastMissionId, Pageable pageable) {
+        Page<Mission> filteredMemberMissions = missionRepository.findNotStartedMissionByMemberIdAndStatusAndRegionName(memberId, status, regionName, lastMissionId, pageable);
+        filteredMemberMissions.forEach(memberMission -> System.out.println("Mission: " + memberMission));
         return filteredMemberMissions;
     }
 }

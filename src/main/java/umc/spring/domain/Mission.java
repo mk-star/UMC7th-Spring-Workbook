@@ -6,6 +6,7 @@ import umc.spring.domain.common.BaseEntity;
 import umc.spring.domain.mapping.MemberMission;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,4 +32,14 @@ public class Mission extends BaseEntity {
     private String missionSpec;
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();
+    @Override
+    public String toString() {
+        return "MemberMission{" +
+                "id=" + id +
+                ", name=" + store.getName() +
+                ", deadline=" + ChronoUnit.DAYS.between(LocalDate.now(), deadline) +
+                ", price=" + price +
+                ", reward=" + reward +
+                '}';
+    }
 }

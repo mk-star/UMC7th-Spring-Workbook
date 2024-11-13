@@ -5,7 +5,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Repository;
+import umc.spring.domain.Mission;
 import umc.spring.domain.QMission;
 import umc.spring.domain.QRegion;
 import umc.spring.domain.QStore;
@@ -26,7 +28,7 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
     private final QRegion region = QRegion.region;
 
     @Override
-    public Page<MemberMission> findMissionsByMemberIdAndStatus(Long memberId, MissionStatus status, Long lastMissionId, Pageable pageable) {
+    public Page<Mission> findMissionsByMemberIdAndStatus(Long memberId, MissionStatus status, Long lastMissionId, Pageable pageable) {
         BooleanBuilder predicate = new BooleanBuilder();
         if(memberId != null) {
             predicate.and(memberMission.member.id.eq(memberId));
@@ -35,27 +37,29 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
             predicate.and(memberMission.status.eq(status));
         }
         if(lastMissionId != null) {
-            predicate.and(memberMission.id.lt(lastMissionId));
+            predicate.and(mission.id.lt(lastMissionId));
         }
         // 페이징된 데이터 조회
-        List<MemberMission> content = jpaQueryFactory
-                .selectFrom(memberMission)
-                .join(memberMission.mission, mission)
-                .join(mission.store, store)
+        List<Mission> content = jpaQueryFactory
+                .selectFrom(mission)
+                .join(memberMission).on(memberMission.mission.id.eq(mission.id))
+                .join(mission.store, store).fetchJoin()
                 .where(predicate)
-                .orderBy(memberMission.id.desc())
+                .orderBy(mission.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
         // 전체 데이터 개수 조회
-        int total = jpaQueryFactory
-                .selectFrom(memberMission)
+        Long total = jpaQueryFactory
+                .select(mission.count())
+                .from(mission)
+                .join(memberMission).on(memberMission.mission.id.eq(mission.id))
+                .join(mission.store, store)
                 .where(predicate)
-                .fetch().size();
+                .fetchOne();
 
-        // PageImpl로 페이징된 결과를 생성하여 반환
-        return new PageImpl<>(content, pageable, total);
+        return new PageImpl<>(content, pageable, total != null ? total : 0L);
     }
 
     @Override
@@ -75,7 +79,7 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
     }
 
     @Override
-    public Page<MemberMission> findNotStartedMissionByMemberIdAndStatusAndRegionName(Long memberId, MissionStatus status, String regionName, Long lastMissionId, Pageable pageable) {
+    public Page<Mission> findNotStartedMissionByMemberIdAndStatusAndRegionName(Long memberId, MissionStatus status, String regionName, Long lastMissionId, Pageable pageable) {
         BooleanBuilder predicate = new BooleanBuilder();
         if(memberId != null) {
             predicate.and(memberMission.member.id.eq(memberId));
@@ -87,30 +91,31 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
             predicate.and(region.name.eq(regionName));
         }
         if(lastMissionId != null) {
-            predicate.and(memberMission.id.lt(lastMissionId));
+            predicate.and(mission.id.lt(lastMissionId));
         }
         // 페이징된 데이터 조회
-        List<MemberMission> content = jpaQueryFactory
-                .selectFrom(memberMission)
-                .join(memberMission.mission, mission)
-                .join(mission.store, store)
+        List<Mission> content = jpaQueryFactory
+                .selectFrom(mission)
+                .join(memberMission).on(memberMission.mission.id.eq(mission.id))
+                .join(mission.store, store).fetchJoin()
                 .join(store.region, region)
                 .where(predicate)
-                .orderBy(memberMission.id.desc())
+                .orderBy(mission.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
         // 전체 데이터 개수 조회
-        int total = jpaQueryFactory
-                .selectFrom(memberMission)
-                .join(memberMission.mission, mission)
+        Long total = jpaQueryFactory
+                .select(mission.count())
+                .from(mission)
+                .join(memberMission).on(memberMission.mission.id.eq(mission.id))
                 .join(mission.store, store)
                 .join(store.region, region)
                 .where(predicate)
-                .fetch().size();
+                .fetchOne();
 
         // PageImpl로 페이징된 결과를 생성하여 반환
-        return new PageImpl<>(content, pageable, total);
+        return new PageImpl<>(content, pageable, total != null ? total : 0L);
     }
 }
