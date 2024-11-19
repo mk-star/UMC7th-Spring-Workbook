@@ -19,25 +19,25 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner run(ApplicationContext context) {
-		return args -> {
-			MissionQueryService missionQueryService = context.getBean(MissionQueryService.class);
-			Pageable pageable = PageRequest.of(0, 10);
-			// 파라미터 값 설정
-			Long memberId = 1L;
-			MissionStatus status = MissionStatus.valueOf("NOT_STARTED");
-			Long lastMissionId = 10L;
-			String regionName = "서울";
-
-			//쿼리 메서드 호출 및 쿼리 문자열과 파라미터 출력
-			System.out.println("Executing findNotStartedMissionByMemberIdAndStatusAndRegionName with parameters:");
-			System.out.println("Member ID: " + memberId);
-			System.out.println("Status: " + status);
-			System.out.println("Region Name: " + regionName);
-
-			missionQueryService.findNotStartedMissionByMemberIdAndStatusAndRegionName(memberId, status, regionName, lastMissionId, pageable)
-					.forEach(System.out::println);
-		};
-	}
+//	@Bean
+//	public CommandLineRunner run(ApplicationContext context) {
+//		return args -> {
+//			MissionQueryService missionQueryService = context.getBean(MissionQueryService.class);
+//			Pageable pageable = PageRequest.of(0, 10);
+//			// 파라미터 값 설정
+//			Long memberId = 1L;
+//			MissionStatus status = MissionStatus.valueOf("NOT_STARTED");
+//			Long lastMissionId = 10L;
+//			String regionName = "서울";
+//
+//			//쿼리 메서드 호출 및 쿼리 문자열과 파라미터 출력
+//			System.out.println("Executing findNotStartedMissionByMemberIdAndStatusAndRegionName with parameters:");
+//			System.out.println("Member ID: " + memberId);
+//			System.out.println("Status: " + status);
+//			System.out.println("Region Name: " + regionName);
+//
+//			missionQueryService.findNotStartedMissionByMemberIdAndStatusAndRegionName(memberId, status, regionName, lastMissionId, pageable)
+//					.forEach(System.out::println);
+//		};
+//	}
 }
