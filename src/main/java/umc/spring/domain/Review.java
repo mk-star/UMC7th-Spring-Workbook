@@ -2,6 +2,9 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.spring.domain.common.BaseEntity;
 
 import java.util.ArrayList;
@@ -9,6 +12,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@DynamicUpdate
+@DynamicInsert
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -24,10 +29,24 @@ public class Review extends BaseEntity {
     private Store store;
     @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
-    @Column(nullable = false)
+    @ColumnDefault("0")
     private float score;
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewImage> reviewImageList = new ArrayList<>();
+
+    public void setMember(Member member) {
+        if(this.member != null)
+            this.member.getReviewList().remove(this);
+        this.member = member;
+        this.member.getReviewList().add(this);
+    }
+
+    public void setStore(Store store) {
+        if(this.store != null)
+            this.store.getReviewList().remove(this);
+        this.store = store;
+        this.store.getReviewList().add(this);
+    }
 
     @Override
     public String toString() {

@@ -12,7 +12,7 @@ public class StoreConverter {
                 .build();
     }
 
-    public static Store toStore(StoreRequestDTO.addStore request) {
+    public static Store toStore(StoreRequestDTO.addStoreDTO request) {
         return Store.builder()
                 .name(request.getName())
                 .address(request.getAddress())
