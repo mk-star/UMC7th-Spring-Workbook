@@ -12,6 +12,8 @@ import umc.spring.repository.RegionRepository.RegionRepository;
 import umc.spring.repository.StoreRepository.StoreRepository;
 import umc.spring.web.dto.Store.StoreRequestDTO;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class StoreCommandServiceImpl implements StoreCommandService{
@@ -20,10 +22,11 @@ public class StoreCommandServiceImpl implements StoreCommandService{
 
     @Override
     @Transactional
-    public Store addStoreToRegion(StoreRequestDTO.addStore request) {
+    public Store addStoreToRegion(StoreRequestDTO.addStoreDTO request) {
         Store newStore = StoreConverter.toStore(request);
         Region region = regionRepository.findById(request.getRegionId()).orElseThrow(() -> new RegionHandler(ErrorStatus.REGION_NOT_FOUND));
         newStore.setRegion(region);
         return storeRepository.save(newStore);
     }
+
 }

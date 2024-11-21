@@ -7,7 +7,7 @@ import lombok.Getter;
 
 public class StoreRequestDTO {
     @Getter
-    public static class addStore {
+    public static class addStoreDTO {
         @NotNull
         Long regionId;
         @NotBlank
