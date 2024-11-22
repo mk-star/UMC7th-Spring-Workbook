@@ -52,9 +52,7 @@ public class MissionCommandServiceImpl implements MissionCommandService{
     @Override
     @Transactional
     public MemberMission updateMissionStatus(MissionRequestDTO.UpdateMissionStatusDTO request) {
-        Member member = memberRepository.findById(request.getMemberId()).orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
-        Mission mission = missionRepository.findById(request.getMissionId()).orElseThrow(() -> new MissionHandler(ErrorStatus.MISSION_NOT_FOUND));
-        MemberMission memberMission = memberMissionRepository.findByMemberAndMission(member, mission).orElseThrow(() -> new MissionHandler(ErrorStatus.MEMBER_MISSION_NOT_FOUND));
+        MemberMission memberMission = memberMissionRepository.findByMemberIdAndMissionId(request.getMemberId(), request.getMissionId()).orElseThrow(() -> new MissionHandler(ErrorStatus.MEMBER_MISSION_NOT_FOUND));
         memberMission.setStatus(MissionStatus.IN_PROGRESS);
         return memberMission;
     }

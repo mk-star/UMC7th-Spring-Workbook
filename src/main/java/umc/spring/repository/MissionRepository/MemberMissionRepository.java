@@ -9,6 +9,6 @@ import umc.spring.domain.mapping.MemberMission;
 import java.util.Optional;
 
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
-    Optional<MemberMission> findByMemberAndMission(Member member, Mission mission);
+    Optional<MemberMission> findByMemberIdAndMissionId(Long memberId, Long missionId);
     Optional<MemberMission> findByMemberIdAndMissionIdAndStatus(Long memberId, Long missionId, MissionStatus status);
 }

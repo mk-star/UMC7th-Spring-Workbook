@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import umc.spring.domain.enums.MissionStatus;
+import umc.spring.validation.annotation.ExistMember;
+import umc.spring.validation.annotation.ExistMission;
 import umc.spring.validation.annotation.ExistStore;
 import umc.spring.validation.annotation.MissionAlreadyChallenged;
 
@@ -26,9 +28,9 @@ public class MissionRequestDTO {
 
     @Getter
     public static class UpdateMissionStatusDTO {
-        @NotNull
+        @ExistMember
         Long memberId;
-        @NotNull
+        @ExistMission
         Long missionId;
     }
 }

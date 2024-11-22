@@ -10,5 +10,6 @@ public interface MissionQueryService {
     Page<Mission> findMissionByMemberIdAndStatus(Long memberId, MissionStatus status, Long lastMissionId, Pageable pageable);
     int findCompletedMissionCountByMemberIdAndStatus(Long memberId, MissionStatus status);
     Page<Mission> findNotStartedMissionByMemberIdAndStatusAndRegionName(Long memberId, MissionStatus status, String regionName, Long lastMissionId, Pageable pageable);
+    boolean isMissionExist(Long value);
     boolean findByMemberIdAndMissionIdAndStatus(Long memberId, Long missionId, MissionStatus status);
 }
