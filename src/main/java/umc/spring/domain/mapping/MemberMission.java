@@ -26,4 +26,8 @@ public class MemberMission extends BaseEntity {
     @Column(nullable = false, columnDefinition = "VARCHAR(15) DEFAULT 'NOT_STARTED'")
     @Enumerated(EnumType.STRING)
     private MissionStatus status;
+
+    public void setStatus(MissionStatus status) {
+        this.status = status;
+    }
 }

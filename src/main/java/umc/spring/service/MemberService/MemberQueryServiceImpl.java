@@ -18,4 +18,9 @@ public class MemberQueryServiceImpl implements MemberQueryService{
         System.out.println("Member: " + member);
         return member;
     }
+
+    @Override
+    public boolean isMemberExist(Long value) {
+        return memberRepository.existsById(value);
+    }
 }

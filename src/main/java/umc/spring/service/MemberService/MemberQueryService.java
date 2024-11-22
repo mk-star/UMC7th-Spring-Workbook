@@ -4,4 +4,5 @@ import umc.spring.domain.Member;
 
 public interface MemberQueryService {
     Member findMemberById(Long id);
+    boolean isMemberExist(Long value);
 }
