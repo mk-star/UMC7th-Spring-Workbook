@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import umc.spring.domain.Mission;
 import umc.spring.domain.enums.MissionStatus;
-import umc.spring.domain.mapping.MemberMission;
+import umc.spring.repository.MemberRepository.MemberRepository;
+import umc.spring.repository.MissionRepository.MemberMissionRepository;
 import umc.spring.repository.MissionRepository.MissionRepository;
 
 import java.util.Optional;
@@ -17,6 +18,8 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class MissionQueryServiceImpl implements MissionQueryService {
     private final MissionRepository missionRepository;
+    private final MemberRepository memberRepository;
+    private final MemberMissionRepository memberMissionRepository;
 
     @Override
     public Page<Mission> findMissionByMemberIdAndStatus(Long memberId, MissionStatus status, Long lastMissionId, Pageable pageable) {
@@ -37,5 +40,10 @@ public class MissionQueryServiceImpl implements MissionQueryService {
         Page<Mission> filteredMemberMissions = missionRepository.findNotStartedMissionByMemberIdAndStatusAndRegionName(memberId, status, regionName, lastMissionId, pageable);
         filteredMemberMissions.forEach(memberMission -> System.out.println("Mission: " + memberMission));
         return filteredMemberMissions;
+    }
+
+    @Override
+    public boolean findByMemberIdAndMissionIdAndStatus(Long memberId, Long missionId, MissionStatus status) {
+        return memberMissionRepository.findByMemberIdAndMissionIdAndStatus(memberId, missionId, status).isPresent();
     }
 }
