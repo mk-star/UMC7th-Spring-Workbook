@@ -10,7 +10,6 @@ import umc.spring.apiPayload.code.exception.handler.StoreHandler;
 import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.converter.MemberMissionConverter;
 import umc.spring.converter.MissionConverter;
-import umc.spring.domain.FoodCategory;
 import umc.spring.domain.Member;
 import umc.spring.domain.Mission;
 import umc.spring.domain.Store;
@@ -23,10 +22,10 @@ import umc.spring.repository.StoreRepository.StoreRepository;
 import umc.spring.web.dto.Mission.MissionRequestDTO;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MissionCommandServiceImpl implements MissionCommandService{
     private final MissionRepository missionRepository;
     private final StoreRepository storeRepository;
@@ -34,7 +33,6 @@ public class MissionCommandServiceImpl implements MissionCommandService{
     private final MemberRepository memberRepository;
 
     @Override
-    @Transactional
     public Mission addMissionToStore(MissionRequestDTO.AddMissionDTO request) {
         Mission newMission = MissionConverter.toMission(request);
         Store store = storeRepository.findById(request.getStoreId()).orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));
@@ -50,10 +48,9 @@ public class MissionCommandServiceImpl implements MissionCommandService{
     }
 
     @Override
-    @Transactional
-    public MemberMission updateMissionStatus(MissionRequestDTO.UpdateMissionStatusDTO request) {
-        MemberMission memberMission = memberMissionRepository.findByMemberIdAndMissionId(request.getMemberId(), request.getMissionId()).orElseThrow(() -> new MissionHandler(ErrorStatus.MEMBER_MISSION_NOT_FOUND));
-        memberMission.setStatus(MissionStatus.IN_PROGRESS);
+    public MemberMission updateMissionStatus(Long memberId, Long missionId, MissionStatus status) {
+        MemberMission memberMission = memberMissionRepository.findByMemberIdAndMissionId(memberId, missionId).orElseThrow(() -> new MissionHandler(ErrorStatus.MEMBER_MISSION_NOT_FOUND));
+        memberMission.setStatus(status);
         return memberMission;
     }
 }
