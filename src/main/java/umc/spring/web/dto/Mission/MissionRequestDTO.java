@@ -32,5 +32,7 @@ public class MissionRequestDTO {
         Long memberId;
         @ExistMission
         Long missionId;
+        @NotNull
+        MissionStatus status;
     }
 }
