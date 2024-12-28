@@ -33,7 +33,7 @@ import umc.spring.web.dto.Review.ReviewResponseDTO;
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("/members")
+@RequestMapping("/api/members")
 public class MemberRestController {
     private final MemberCommandService memberCommandService;
     private final MemberQueryService memberQueryService;
