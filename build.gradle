@@ -38,7 +38,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	// swagger
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.1.0'
 
 	// validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -53,6 +53,9 @@ dependencies {
 
 	// Spring Security OAuth2 클라이언트 의존성 추가
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	// S3 의존성 추가
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {
