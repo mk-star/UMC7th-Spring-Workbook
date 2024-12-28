@@ -25,7 +25,7 @@ import umc.spring.web.dto.Mission.MissionResponseDTO;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/missions")
+@RequestMapping("/api/missions")
 @Validated
 public class MissionRestController {
     private final MissionCommandService missionCommandService;
